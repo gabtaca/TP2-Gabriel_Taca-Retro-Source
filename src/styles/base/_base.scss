@@ -1,0 +1,92 @@
+// ============================================
+// Base Styles
+// Base element and utility styles
+// ============================================
+
+// Images
+// ============================================
+img {
+  border-radius: $radius-sm;
+  height: auto;
+}
+
+// Links
+// ============================================
+.link {
+  &:hover {
+    text-decoration: underline;
+    cursor: pointer;
+  }
+}
+
+// Buttons
+// ============================================
+button.reset {
+  @include button-reset;
+
+  &:hover:not(:has(> *)) {
+    text-decoration: underline;
+  }
+
+  &:not(:has(> *)) {
+    height: 1.5rem;
+    line-height: 1.5rem;
+  }
+}
+
+.arcade-button {
+  @include arcade-button;
+}
+
+.arcade-action-button {
+  font-size: $font-size-3xl;
+  transition: filter $transition-fast;
+
+  &:hover {
+    filter: brightness(1.25);
+  }
+}
+
+// Screen Reader Only
+// ============================================
+.sr-only {
+  @include sr-only;
+}
+
+// Container
+// ============================================
+.container {
+  @include container;
+}
+
+// Overlay
+// ============================================
+.overlay {
+  @include overlay;
+
+  .close-outside {
+    background: transparent;
+    border: none;
+    color: transparent;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: calc(100% - $aside-width);
+  }
+
+  .light {
+    background: rgba(255, 255, 255, 0.5);
+  }
+
+  .cancel {
+    cursor: default;
+    height: 100%;
+    position: absolute;
+    width: 100%;
+  }
+
+  &.expanded aside {
+    transform: translateX(calc($aside-width * -1));
+  }
+}

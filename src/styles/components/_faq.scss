@@ -1,0 +1,72 @@
+// ============================================
+// FAQ Component
+// ============================================
+
+.faq-section {
+  @include flex-column;
+  gap: $spacing-lg;
+  width: 100%;
+  flex: 1;
+
+  h2 {
+    font-family: $font-display;
+    font-size: $font-size-2xl;
+    color: $ctr-text;
+    text-align: center;
+    margin-bottom: $spacing-sm;
+  }
+}
+
+.faq-list {
+  @include flex-column;
+  gap: $spacing-sm;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba($ctr-text, 0.2);
+}
+
+.faq-question {
+  width: 100%;
+  @include flex(row, space-between, center);
+  gap: $spacing-sm;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: $spacing-sm 0;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-base;
+  color: $ctr-text;
+  text-align: left;
+  font-family: $font-secondary;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $retro-text-green;
+  }
+
+  &.active {
+    color: $retro-text-green;
+  }
+}
+
+.faq-question__arrow {
+  font-size: $font-size-lg;
+  transition: transform $transition-fast;
+  flex-shrink: 0;
+
+  &.down {
+    transform: rotate(90deg);
+  }
+}
+
+.faq-answer {
+  display: block;
+  padding: $spacing-sm 0 $spacing-lg;
+  font-size: $font-size-sm;
+  color: $ctr-text;
+  line-height: 1.7;
+}

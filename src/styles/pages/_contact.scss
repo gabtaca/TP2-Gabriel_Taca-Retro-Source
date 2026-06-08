@@ -1,0 +1,54 @@
+// ============================================
+// Contact Page
+// ============================================
+
+.contact-page {
+  @include flex-column;
+  width: 100%;
+  flex: 1;
+}
+
+.contact-info {
+  @include flex-column;
+  gap: $spacing-lg;
+  flex: 1;
+
+  h2 {
+    font-family: $font-display;
+    font-size: $font-size-2xl;
+    color: $ctr-text;
+    text-align: center;
+    margin-bottom: $spacing-sm;
+  }
+}
+
+.contact-info__item {
+  @include flex(row, flex-start, center);
+  gap: $spacing-sm;
+  font-size: $font-size-base;
+  color: $ctr-text;
+  font-family: $font-secondary;
+
+  strong {
+    font-weight: $font-weight-bold;
+  }
+
+  a {
+    color: $retro-text-green;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.contact-info__map {
+  margin-top: $spacing-lg;
+  font-family: $font-secondary;
+  font-size: $font-size-sm;
+  color: $ctr-text;
+  text-align: center;
+  background: rgba($ctr-text, 0.1);
+  padding: $spacing-xl;
+  border-radius: $radius-md;
+}

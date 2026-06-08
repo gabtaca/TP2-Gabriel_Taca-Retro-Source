@@ -1,0 +1,232 @@
+// ============================================
+// Header Component
+// Arcade-style header with nested borders
+// ============================================
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: $z-index-fixed;
+  width: 100%;
+  background: $gray-400;
+  border: 4px solid $gray-400;
+  border-radius: $radius-md;
+  font-family: $font-secondary;
+
+  &__border-1 {
+    width: 100%;
+    border: 4px solid $game-lines;
+    border-radius: $radius-sm;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__border-2 {
+    width: 100%;
+    border: 3px solid $gray-300;
+    border-radius: $radius-sm;
+    display: flex;
+  }
+
+  &__border-3 {
+    width: 100%;
+    border: 2px solid $game-lines;
+    border-radius: $radius-sm;
+    padding: $spacing-sm $spacing-lg;
+    display: flex;
+    align-items: center;
+    min-height: $header-height;
+    gap: $spacing-lg;
+  }
+}
+
+// Logo / Brand
+.header__brand {
+  @include flex(column, center, center);
+  flex-shrink: 0;
+  text-decoration: none;
+  color: $color-dark;
+
+  img {
+    height: 40px;
+    width: auto;
+    background: $color-light;
+    border-radius: $radius-sm;
+  }
+
+  strong {
+    font-size: $font-size-xs;
+    font-family: $font-secondary;
+    color: $color-dark;
+  }
+}
+
+// Desktop nav
+.header__nav {
+  display: none;
+  align-items: center;
+  gap: $spacing-lg;
+  margin-left: $spacing-2xl;
+
+  @include respond-to('md') {
+    display: flex;
+  }
+}
+
+.header__nav-item {
+  position: relative;
+
+  &:hover .header__submenu {
+    display: block;
+  }
+}
+
+.header__nav-link {
+  font-family: $font-secondary;
+  font-size: $font-size-sm;
+  color: $color-dark;
+  text-decoration: none;
+  cursor: pointer;
+  white-space: nowrap;
+  background: none;
+  border: none;
+  padding: 0;
+
+  &:hover,
+  &.active {
+    text-decoration: underline;
+  }
+}
+
+.header__submenu {
+  display: none;
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 0;
+  background: $color-light;
+  list-style: none;
+  padding: $spacing-sm 0;
+  margin: 0;
+  border: 1px solid $gray-300;
+  box-shadow: $shadow-md;
+  z-index: $z-index-dropdown;
+  min-width: 160px;
+}
+
+.header__submenu-item {
+  display: block;
+  padding: $spacing-sm $spacing-lg;
+  color: $color-dark;
+  text-decoration: none;
+  font-family: $font-secondary;
+  font-size: $font-size-sm;
+  white-space: nowrap;
+
+  &:hover {
+    background: $gray-100;
+  }
+}
+
+// CTAs (Search + Cart)
+.header__ctas {
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+  margin-left: auto;
+}
+
+.header__search-btn,
+.header__cart-btn {
+  @include flex(row, center, center);
+  gap: $spacing-xs;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: $font-secondary;
+  font-size: $font-size-sm;
+  color: $color-dark;
+  text-decoration: none;
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.header__cart-btn {
+  position: relative;
+}
+
+.header__cart-count {
+  position: absolute;
+  top: -10px;
+  left: 16px;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  min-width: 16px;
+  text-align: center;
+}
+
+.header__search-label,
+.header__cart-label {
+  display: none;
+
+  @include respond-to('md') {
+    display: inline;
+  }
+}
+
+// Mobile menu toggle
+.header__mobile-toggle {
+  @include button-reset;
+  font-size: $font-size-2xl;
+  display: flex;
+
+  @include respond-to('md') {
+    display: none;
+  }
+}
+
+// Mobile nav drawer
+.header__mobile-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: $gray-400;
+  z-index: $z-index-modal;
+  @include flex-column;
+  padding: $spacing-2xl $spacing-lg;
+  gap: $spacing-lg;
+  display: none; // must come after @include flex-column to not be overridden
+
+  &.open {
+    display: flex;
+  }
+}
+
+.header__mobile-close {
+  @include button-reset;
+  font-size: $font-size-3xl;
+  align-self: flex-end;
+  line-height: 1;
+}
+
+.header__mobile-link {
+  font-family: $font-secondary;
+  font-size: $font-size-xl;
+  color: $color-dark;
+  text-decoration: none;
+  border-bottom: 2px solid $game-lines;
+  padding-bottom: $spacing-sm;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}

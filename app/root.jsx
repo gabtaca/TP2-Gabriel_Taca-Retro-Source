@@ -16,6 +16,14 @@ import appStyles from '~/styles/app.css?url';
 import tailwindCss from './styles/tailwind.css?url';
 import {PageLayout} from '~/components/PageLayout';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
+import {
+  USE_MOCK_DATA,
+  MOCK_SHOP,
+  MOCK_HEADER_MENU,
+  MOCK_FOOTER_MENU,
+  MOCK_CART,
+  mockShopifyResponse,
+} from '~/data/mockData';
 
 
 /**
@@ -57,21 +65,30 @@ export async function loader(args) {
 
   const {storefront, env} = args.context;
 
+  // Si mode mock, utiliser données mock pour shop analytics
+  const shopAnalytics = USE_MOCK_DATA
+    ? {
+        shopId: 'mock-shop-id',
+        acceptedLanguage: 'en',
+        currency: 'USD',
+      }
+    : getShopAnalytics({
+        storefront,
+        publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
+      });
+
   return defer({
     ...deferredData,
     ...criticalData,
-    publicStoreDomain: env.PUBLIC_STORE_DOMAIN,
-    shop: getShopAnalytics({
-      storefront,
-      publicStorefrontId: env.PUBLIC_STOREFRONT_ID,
-    }),
+    publicStoreDomain: USE_MOCK_DATA ? 'localhost' : env.PUBLIC_STORE_DOMAIN,
+    shop: shopAnalytics,
     consent: {
-      checkoutDomain: env.PUBLIC_CHECKOUT_DOMAIN,
-      storefrontAccessToken: env.PUBLIC_STOREFRONT_API_TOKEN,
+      checkoutDomain: USE_MOCK_DATA ? 'localhost' : env.PUBLIC_CHECKOUT_DOMAIN,
+      storefrontAccessToken: USE_MOCK_DATA ? 'mock-token' : env.PUBLIC_STOREFRONT_API_TOKEN,
       withPrivacyBanner: false,
       // localize the privacy banner
-      country: args.context.storefront.i18n.country,
-      language: args.context.storefront.i18n.language,
+      country: USE_MOCK_DATA ? 'US' : args.context.storefront.i18n.country,
+      language: USE_MOCK_DATA ? 'EN' : args.context.storefront.i18n.language,
     },
   });
 }
@@ -82,6 +99,16 @@ export async function loader(args) {
  * @param {LoaderFunctionArgs}
  */
 async function loadCriticalData({context}) {
+  // Si mode mock activé, retourner les données mock
+  if (USE_MOCK_DATA) {
+    return {
+      header: {
+        shop: MOCK_SHOP,
+        menu: MOCK_HEADER_MENU,
+      },
+    };
+  }
+
   const {storefront} = context;
 
   const [header] = await Promise.all([
@@ -104,6 +131,15 @@ async function loadCriticalData({context}) {
  * @param {LoaderFunctionArgs}
  */
 function loadDeferredData({context}) {
+  // Si mode mock activé, retourner les données mock
+  if (USE_MOCK_DATA) {
+    return {
+      footer: mockShopifyResponse({menu: MOCK_FOOTER_MENU}),
+      cart: mockShopifyResponse(MOCK_CART),
+      isLoggedIn: mockShopifyResponse(false),
+    };
+  }
+
   const {storefront, customerAccount, cart} = context;
 
   // defer the footer query (below the fold)

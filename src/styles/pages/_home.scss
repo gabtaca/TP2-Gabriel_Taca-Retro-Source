@@ -1,0 +1,53 @@
+// ============================================
+// Home Page
+// ============================================
+
+.home {
+  @include flex-column;
+  width: 100%;
+  flex: 1;
+}
+
+.home__news-header {
+  text-align: center;
+
+  h1 {
+    font-family: $font-display;
+    font-size: $font-size-2xl; // smaller on mobile
+    color: $ctr-text;
+    margin-bottom: $spacing-xs;
+
+    span {
+      font-size: $font-size-base;
+      font-weight: $font-weight-normal;
+    }
+
+    @include respond-to('lg') {
+      font-size: $font-size-4xl;
+
+      span {
+        font-size: $font-size-xl;
+      }
+    }
+  }
+
+  p {
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    color: $ctr-text;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    display: none; // hidden on mobile
+
+    @include respond-to('lg') {
+      display: block;
+    }
+  }
+}
+
+// Hint bar — shared arcade-nav-hint / arcade-action-hint components inside
+.home__arcade-labels {
+  @include flex(row, center, center);
+  gap: $spacing-2xl;
+  margin-bottom: $spacing-sm;
+}

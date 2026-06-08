@@ -4,6 +4,7 @@ import {Suspense} from 'react';
 import {Image, Money} from '@shopify/hydrogen';
 import Carousel from '~/components/Carousel';
 import {newsList} from '~/data/newsData';
+import {USE_MOCK_DATA, MOCK_PRODUCTS, mockShopifyResponse} from '~/data/mockData';
 
 /**
  * @type {MetaFunction}
@@ -31,6 +32,19 @@ export async function loader(args) {
  * @param {LoaderFunctionArgs}
  */
 async function loadCriticalData({context}) {
+  // Si mode mock activé, retourner les données mock
+  if (USE_MOCK_DATA) {
+    return {
+      featuredCollection: {
+        id: 'gid://shopify/Collection/featured',
+        handle: 'featured',
+        title: 'Featured Products',
+        description: 'Check out our featured retro gaming products!',
+        products: MOCK_PRODUCTS,
+      },
+    };
+  }
+
   const [{collections}] = await Promise.all([
     context.storefront.query(FEATURED_COLLECTION_QUERY),
     // Add other queries here, so that they are loaded in parallel
@@ -48,6 +62,13 @@ async function loadCriticalData({context}) {
  * @param {LoaderFunctionArgs}
  */
 function loadDeferredData({context}) {
+  // Si mode mock activé, retourner les données mock
+  if (USE_MOCK_DATA) {
+    return {
+      recommendedProducts: mockShopifyResponse({products: MOCK_PRODUCTS}),
+    };
+  }
+
   const recommendedProducts = context.storefront
     .query(RECOMMENDED_PRODUCTS_QUERY)
     .catch((error) => {

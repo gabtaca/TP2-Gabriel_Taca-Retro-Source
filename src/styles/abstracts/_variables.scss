@@ -1,0 +1,129 @@
+// ============================================
+// SCSS Variables
+// Extracted from app.css and organized
+// ============================================
+
+// Colors
+// ============================================
+$color-dark: #000;
+$color-light: #fff;
+$ctr-text: #1a2e05;
+$aside-bg-color: #d1d5db;
+$game-lines: #b91c1c;
+$body-bg: #2e2e2e;
+
+// Retro/Arcade Colors
+$retro-green: #a2c653;
+$retro-green-hover: #8eb050;
+$retro-green-border: #84a44c;
+$retro-green-border-hover: #779b42;
+$retro-text-green: #2e4f29;
+
+// CRT Screen Colors
+$crt-gradient-center: #d2e9e2;
+$crt-gradient-mid: #8fc2ad;
+$crt-gradient-outer: #5e8c77;
+$crt-gradient-edge: #1b2f29;
+
+// Gray Shades
+$gray-50: #f9fafb;
+$gray-100: #f3f4f6;
+$gray-200: #e5e7eb;
+$gray-300: #d1d5db;
+$gray-400: #9ca3af;
+$gray-500: #6b7280;
+$gray-600: #4b5563;
+$gray-700: #374151;
+$gray-800: #1f2937;
+$gray-900: #111827;
+
+// Zinc Shades (for arcade buttons)
+$zinc-100: #f4f4f5;
+$zinc-200: #e4e4e7;
+$zinc-300: #d4d4d8;
+$zinc-500: #71717a;
+$zinc-600: #52525b;
+$zinc-700: #3f3f46;
+$zinc-800: #27272a;
+$zinc-900: #18181b;
+
+// Layout Dimensions
+// ============================================
+$aside-width: 400px;
+$cart-aside-summary-height: 250px;
+$cart-aside-summary-height-with-discount: 300px;
+$grid-item-width: 355px;
+$header-height: 64px;
+
+// Spacing Scale
+// ============================================
+$spacing-xs: 0.25rem;   // 4px
+$spacing-sm: 0.5rem;    // 8px
+$spacing-md: 0.75rem;   // 12px
+$spacing-lg: 1rem;      // 16px
+$spacing-xl: 1.5rem;    // 24px
+$spacing-2xl: 2rem;     // 32px
+$spacing-3xl: 3rem;     // 48px
+$spacing-4xl: 4rem;     // 64px
+
+// Border Radius
+// ============================================
+$radius-sm: 4px;
+$radius-md: 8px;
+$radius-lg: 20px;
+$radius-full: 9999px;
+
+// Breakpoints (Mobile First)
+// ============================================
+$breakpoint-sm: 30em;   // 480px
+$breakpoint-md: 45em;   // 720px
+$breakpoint-lg: 64em;   // 1024px
+$breakpoint-xl: 80em;   // 1280px
+
+// Font Families
+// ============================================
+$font-primary: 'Jersey 25 Charted', monospace;
+$font-secondary: 'Silkscreen', monospace;
+$font-display: 'Anton SC', sans-serif;
+$font-system: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+
+// Font Sizes
+// ============================================
+$font-size-xs: 0.75rem;     // 12px
+$font-size-sm: 0.875rem;    // 14px
+$font-size-base: 1rem;      // 16px
+$font-size-lg: 1.125rem;    // 18px
+$font-size-xl: 1.25rem;     // 20px
+$font-size-2xl: 1.5rem;     // 24px
+$font-size-3xl: 1.875rem;   // 30px
+$font-size-4xl: 2.25rem;    // 36px
+
+// Font Weights
+// ============================================
+$font-weight-light: 200;
+$font-weight-normal: 400;
+$font-weight-bold: 700;
+
+// Shadows
+// ============================================
+$shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+$shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+$shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+$shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+
+// CRT Shadow
+$shadow-crt-inset: inset 0px 10px 30px rgba(0, 0, 0, 0.6), inset 0px -10px 30px rgba(0, 0, 0, 0.8);
+$shadow-crt-outer: 0px 0px 30px 5px rgba(0, 0, 0, 0.8);
+
+// Transitions
+// ============================================
+$transition-fast: 200ms ease-in-out;
+$transition-base: 300ms ease-in-out;
+$transition-slow: 400ms ease-in-out;
+
+// Z-Index Scale
+// ============================================
+$z-index-dropdown: 10;
+$z-index-sticky: 1;
+$z-index-fixed: 100;
+$z-index-modal: 1000;

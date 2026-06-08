@@ -1,0 +1,66 @@
+// ============================================
+// Main SCSS Entry Point — 7-1 Architecture
+// ============================================
+
+// Abstracts
+@import './abstracts/variables';
+@import './abstracts/mixins';
+
+// Base
+@import './base/reset';
+@import './base/typography';
+@import './base/base';
+
+// Layout
+@import './layout/grid';
+@import './layout/container';
+
+// Components
+@import './components/header';
+@import './components/footer';
+@import './components/arcade-body';
+@import './components/carousel';
+@import './components/product';
+@import './components/filter';
+@import './components/faq';
+@import './components/particles';
+@import './components/cart-aside';
+
+// Pages
+@import './pages/home';
+@import './pages/products';
+@import './pages/contact';
+@import './pages/faq-page';
+@import './pages/error';
+
+// Global body style
+body {
+  background: $body-bg;
+  font-family: $font-system;
+  color: $color-dark;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#root {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+  background: $body-bg;
+  position: relative;
+  padding: $spacing-lg 0; // keeps the gap charcoal — margin on child would collapse through
+}

@@ -1,0 +1,129 @@
+// ============================================
+// Container Layout
+// ============================================
+
+.container {
+  @include container;
+
+  &--narrow {
+    max-width: 768px;
+  }
+
+  &--wide {
+    max-width: 1536px;
+  }
+
+  &--full {
+    max-width: 100%;
+  }
+}
+
+// Page Layouts
+// ============================================
+.page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.main-content {
+  flex: 1;
+  width: 100%;
+}
+
+// Stage — full-width backdrop behind the screen + arcade body
+.page-stage {
+  position: relative;
+  overflow: hidden;
+
+  // Blurred GIF sits on a pseudo-element so content is unaffected
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -20px; // overshoot edges to hide blur fade-out artifacts
+    background-image: url('/images/neon_arcade_animated.gif');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    filter: blur(8px);
+    z-index: 0;
+  }
+
+  // Semi-transparent black overlay on top of the GIF
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(180, 180, 180, 0.92);
+    z-index: 1;
+  }
+
+  // Lift direct children above both GIF and overlay
+  > * {
+    position: relative;
+    z-index: 2;
+  }
+}
+
+// Live indicator — positioned to the right of the CRT screen
+.page-live {
+  display: none; // hidden until there is enough room beside the screen
+
+  @include respond-to('lg') {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $spacing-xs;
+    position: absolute;
+    // sits in the gap between the CRT right edge and main's right edge
+    right: calc((100% - 56rem) / 2 - 3rem);
+    top: $spacing-4xl;
+  }
+}
+
+.page-live__label {
+  font-family: $font-secondary;
+  font-size: $font-size-xs;
+  color: $color-light;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.page-live__light {
+  width: 14px;
+  height: 14px;
+  border-radius: $radius-full;
+  background: $game-lines;
+  box-shadow: 0 0 6px $game-lines, 0 0 14px rgba($game-lines, 0.6);
+  animation: live-flash 2.4s ease-in-out infinite;
+}
+
+@keyframes live-flash {
+  0%, 100% {
+    opacity: 1;
+    box-shadow: 0 0 6px $game-lines, 0 0 14px rgba($game-lines, 0.6);
+  }
+  50% {
+    opacity: 0.15;
+    box-shadow: none;
+  }
+}
+
+// Shared CRT screen — used by PageLayout to wrap all page content
+.page-crt {
+  @include crt-screen;
+  width: 95%;
+  max-width: 56rem;
+  margin: 0 auto; // vertical spacing comes from main's padding
+  height: clamp(284px, 45vh, 591px); // mobile: ~17% less than desktop
+  padding: 20px;
+  overflow-y: auto;
+
+  @include respond-to('lg') {
+    height: clamp(375px, 60vh, 780px); // desktop: full size
+    padding: 30px; // restore mixin default
+  }
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}

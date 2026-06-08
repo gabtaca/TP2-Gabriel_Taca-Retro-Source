@@ -1,0 +1,215 @@
+// ============================================
+// ArcadeBody Component
+// The physical arcade cabinet controls below the screen
+// ============================================
+
+.arcade-body {
+  @include flex-column;
+  width: 100%;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.arcade-body__top-gradient {
+  width: 100%;
+  height: 1.6rem; // mobile: 60% less than desktop (4rem * 0.4)
+  background: linear-gradient(to top, $zinc-100, $zinc-600);
+
+  @include respond-to('lg') {
+    height: 4rem;
+  }
+}
+
+.arcade-body__main {
+  @include flex(column, center, center);
+  width: 100%;
+  background: $zinc-100;
+  padding: 0;
+
+  @include respond-to('lg') {
+    padding: $spacing-lg 0 0;
+  }
+}
+
+.arcade-body__controls {
+  @include flex(row, center, center);
+  width: 100%;
+  gap: $spacing-2xl;
+  padding: $spacing-lg $spacing-lg $spacing-4xl;
+}
+
+// D-pad / nav buttons
+.arcade-body__nav {
+  @include flex(row, space-between, center);
+  width: 8rem;
+  gap: $spacing-sm;
+
+  @include respond-to('md') {
+    width: 14rem;
+    margin-right: $spacing-2xl;
+  }
+}
+
+.arcade-body__nav-btn {
+  @include arcade-button;
+  border-radius: $radius-full;
+  padding: $spacing-sm;
+
+  span {
+    @include flex-center;
+    width: 1.5rem;
+    height: 1.5rem;
+    border-radius: $radius-full;
+    border-left: 1px solid $zinc-500;
+    border-top: 1px solid $zinc-500;
+    box-shadow: inset 0 0 4px $zinc-900;
+
+    @include respond-to('md') {
+      width: 3rem;
+      height: 3rem;
+    }
+  }
+
+  img {
+    width: 1rem;
+    height: 1rem;
+
+    @include respond-to('md') {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+  }
+}
+
+// A and B action buttons
+.arcade-body__buttons {
+  @include flex(row, center, center);
+  gap: $spacing-lg;
+  padding-left: $spacing-lg;
+}
+
+.arcade-body__action-btn {
+  @include flex(column, center, center);
+  gap: $spacing-xs;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: $font-weight-bold;
+  color: $gray-600;
+  font-size: $font-size-2xl;
+  font-family: $font-secondary;
+  transition: filter $transition-fast;
+
+  &:hover {
+    filter: brightness(1.25);
+  }
+
+  img {
+    width: 64px;
+    height: auto;
+    display: block;
+
+    @include respond-to('md') {
+      width: 80px;
+    }
+  }
+}
+
+// Banner at the bottom
+.arcade-body__spacer {
+  width: 100%;
+  height: 4rem;
+  background: $zinc-100;
+}
+
+.arcade-body__bottom-gradient {
+  width: 100%;
+  height: 4rem;
+  background: linear-gradient(to top, $zinc-600, $zinc-100);
+}
+
+.arcade-body__banner {
+  width: 100%;
+  display: block;
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    border-radius: 0;
+  }
+}
+
+// ============================================
+// Shared arcade hint components
+// Used in home arcade-labels and products hints bar
+// ============================================
+
+@keyframes nav-arrow-pulse {
+  0%, 35%  { transform: scale(0.85); opacity: 1;    }
+  50%, 85% { transform: scale(0.55); opacity: 0.55; }
+  100%     { transform: scale(0.85); opacity: 1;    }
+}
+
+// [◄] [►] Navigate — nav arrows + label inline
+.arcade-nav-hint {
+  @include flex(row, flex-start, center);
+  gap: $spacing-sm;
+}
+
+.arcade-nav-label {
+  font-family: $font-secondary;
+  font-size: $font-size-xs;
+  color: $ctr-text;
+}
+
+// Circular arcade-style arrow button (decorative, not interactive)
+.arcade-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: $radius-full;
+  background-color: $zinc-700;
+  border: 2px solid $zinc-900;
+  border-bottom-width: 3px;
+  box-shadow: $shadow-md;
+
+  &__inner {
+    @include flex-center;
+    width: 18px;
+    height: 18px;
+    border-radius: $radius-full;
+    border-left: 1px solid $zinc-500;
+    border-top: 1px solid $zinc-500;
+    box-shadow: inset 0 0 4px $zinc-900;
+
+    img {
+      width: 10px;
+      height: 10px;
+    }
+  }
+
+  &--left  { animation: nav-arrow-pulse 2s ease-in-out infinite; }
+  &--right { animation: nav-arrow-pulse 2s ease-in-out infinite; animation-delay: -1s; }
+}
+
+// A [btn] Label — action button + label inline
+.arcade-action-hint {
+  @include flex(row, flex-start, center);
+  gap: $spacing-sm;
+
+  // Letter before image: row-reverse swaps the DOM order visually
+  .arcade-hint-btn {
+    flex-direction: row-reverse;
+    align-items: center;
+    gap: $spacing-xs;
+  }
+
+  &__label {
+    font-family: $font-secondary;
+    font-size: $font-size-xs;
+    color: $ctr-text;
+  }
+}

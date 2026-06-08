@@ -1,0 +1,44 @@
+// ============================================
+// Particle Effects (Stars & Coins)
+// ============================================
+
+.particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.particle {
+  position: absolute;
+  animation: particle-pop 1s ease-out forwards;
+}
+
+@keyframes particle-pop {
+  0% {
+    transform: scale(0) translateY(0);
+    opacity: 1;
+  }
+  60% {
+    transform: scale(1.2) translateY(-20px);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.8) translateY(-40px);
+    opacity: 0;
+  }
+}
+
+// Pulse animation for carousel nav hint
+@keyframes pulse-once {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+.animate-pulse-once {
+  animation: pulse-once 0.5s ease-in-out;
+}

@@ -1,0 +1,44 @@
+// ============================================
+// Grid Layout Utilities
+// ============================================
+
+.grid {
+  display: grid;
+}
+
+// Product Grids
+// ============================================
+.recommended-products-grid {
+  @include grid(1, $spacing-xl);
+  padding: 2em;
+  font-family: $font-primary;
+
+  @include respond-to('sm') {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @include respond-to('md') {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+.products-grid {
+  @include grid-auto-fit($grid-item-width, $spacing-xl);
+  margin-bottom: $spacing-2xl;
+  font-family: $font-primary;
+  color: $ctr-text;
+}
+
+// Collection Grids
+// ============================================
+.collections-grid {
+  @include grid-auto-fit($grid-item-width, $spacing-xl);
+  margin-bottom: $spacing-2xl;
+}
+
+// Blog Grid
+// ============================================
+.blog-grid {
+  @include grid-auto-fit($grid-item-width, $spacing-xl);
+  margin-bottom: $spacing-2xl;
+}

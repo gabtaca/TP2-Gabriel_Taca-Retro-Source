@@ -1,0 +1,157 @@
+// ============================================
+// Filter Section Component
+// ============================================
+
+.filter-panel {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: $z-index-modal;
+  @include flex(row, flex-start, stretch);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity $transition-base;
+
+  &.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.filter-panel__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba($color-dark, 0.5);
+  cursor: pointer;
+}
+
+.filter-panel__content {
+  position: relative;
+  background: $gray-900;
+  color: $color-light;
+  width: 320px;
+  max-width: 90vw;
+  height: 100%;
+  overflow-y: auto;
+  padding: $spacing-2xl $spacing-lg;
+  @include flex-column;
+  gap: $spacing-xl;
+  transform: translateX(-100%);
+  transition: transform $transition-base;
+
+  .filter-panel.open & {
+    transform: translateX(0);
+  }
+}
+
+.filter-panel__close {
+  @include button-reset;
+  align-self: flex-end;
+  font-size: $font-size-2xl;
+  color: $color-light;
+  line-height: 1;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+.filter-panel__group {
+  @include flex-column;
+  gap: $spacing-sm;
+}
+
+.filter-panel__heading {
+  font-weight: $font-weight-bold;
+  font-size: $font-size-lg;
+  color: $color-light;
+  font-family: $font-secondary;
+  margin-bottom: $spacing-xs;
+}
+
+.filter-panel__options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-sm;
+}
+
+.filter-panel__label {
+  @include flex(row, flex-start, center);
+  gap: $spacing-sm;
+  font-size: $font-size-sm;
+  color: $color-light;
+  cursor: pointer;
+
+  input[type='checkbox'] {
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    accent-color: $game-lines;
+  }
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.filter-panel__actions {
+  @include flex(row, flex-start, center);
+  gap: $spacing-lg;
+  margin-top: $spacing-sm;
+}
+
+.filter-panel__apply {
+  padding: $spacing-sm $spacing-lg;
+  background: $gray-500;
+  color: $game-lines;
+  font-weight: $font-weight-bold;
+  border-radius: $radius-sm;
+  border: none;
+  cursor: pointer;
+  font-family: $font-secondary;
+  font-size: $font-size-sm;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $gray-700;
+    color: #e53e3e;
+  }
+}
+
+.filter-panel__clear {
+  padding: $spacing-sm $spacing-lg;
+  background: $gray-300;
+  color: $game-lines;
+  font-weight: $font-weight-bold;
+  border-radius: $radius-sm;
+  text-decoration: none;
+  font-family: $font-secondary;
+  font-size: $font-size-sm;
+  border: none;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $gray-500;
+    color: #e53e3e;
+  }
+}
+
+// Filter toggle button (on products page)
+.filter-toggle-btn {
+  @include button-reset;
+  background: $gray-900;
+  color: $color-light;
+  padding: $spacing-sm $spacing-lg;
+  border-radius: $radius-sm;
+  font-family: $font-secondary;
+  font-size: $font-size-sm;
+  cursor: pointer;
+  transition: background $transition-fast;
+
+  &:hover {
+    background: $gray-700;
+  }
+}

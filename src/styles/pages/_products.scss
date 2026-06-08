@@ -1,0 +1,62 @@
+// ============================================
+// Products Page
+// ============================================
+
+.products-page {
+  @include flex-column;
+  width: 100%;
+  flex: 1;
+}
+
+.products-page__header {
+  @include flex(row, space-between, center);
+  width: 100%;
+  margin-bottom: $spacing-sm;
+  flex-wrap: wrap;
+  gap: $spacing-sm;
+}
+
+.products-page__title {
+  font-family: $font-display;
+  font-size: $font-size-2xl;
+  color: $ctr-text;
+}
+
+.products-page__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+
+  // List view: content flows from top
+  &.list-view {
+    justify-content: flex-start;
+    align-items: stretch;
+  }
+
+  // Card view: content stretches to fill
+  &.card-view {
+    justify-content: center;
+    align-items: stretch;
+  }
+}
+
+// Hint bar (inside the shared CRT screen)
+.products-page__hints {
+  @include flex(row, center, center);
+  gap: $spacing-2xl;
+  width: 100%;
+  margin-top: $spacing-sm;
+  padding-top: $spacing-sm;
+  border-top: 1px solid rgba($ctr-text, 0.2);
+  flex-wrap: wrap;
+}
+
+.products-page__empty {
+  @include flex(column, center, center);
+  gap: $spacing-lg;
+  padding: $spacing-2xl;
+  text-align: center;
+  color: $ctr-text;
+  font-family: $font-secondary;
+  flex: 1;
+}

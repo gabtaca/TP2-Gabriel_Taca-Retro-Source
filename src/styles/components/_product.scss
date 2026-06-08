@@ -1,0 +1,246 @@
+// ============================================
+// Product Display — card view inside CRT
+// ============================================
+
+.product-display {
+  @include flex(column, flex-start, center);
+  width: 100%;
+  gap: $spacing-lg;
+
+  @include respond-to('sm') {
+    @include flex(row, flex-start, center); // align-items: center = Y-axis centering
+  }
+}
+
+.product-display__back {
+  @include button-reset;
+  font-family: $font-secondary;
+  font-size: $font-size-xs;
+  color: $game-lines;
+  cursor: pointer;
+  margin-bottom: $spacing-xs;
+  align-self: flex-start;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.product-display__image {
+  width: 100%;
+  max-width: 180px;
+  flex-shrink: 0;
+  align-self: center; // centers the image column on Y axis in the row
+
+  img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    background: transparent;
+    border-radius: $radius-sm;
+  }
+}
+
+.product-display__info {
+  @include flex-column;
+  gap: $spacing-sm;
+  flex: 1;
+  min-width: 0;
+}
+
+.product-display__title {
+  font-family: $font-display;
+  font-size: $font-size-2xl;
+  font-weight: $font-weight-bold;
+  color: $ctr-text;
+}
+
+.product-display__price {
+  font-family: $font-secondary;
+  font-size: $font-size-lg;
+  color: $ctr-text;
+}
+
+.product-display__actions {
+  @include flex-column;
+  gap: $spacing-sm;
+  margin-top: $spacing-sm;
+}
+
+.product-display__action-row {
+  @include flex(row, flex-start, center);
+  gap: $spacing-md;
+  position: relative;
+}
+
+.product-display__action-btn {
+  @include flex(row, center, center);
+  gap: $spacing-sm;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-weight: $font-weight-bold;
+  font-size: $font-size-sm;
+  color: $gray-800;
+  font-family: $font-secondary;
+  transition: color $transition-fast;
+
+  &:hover {
+    color: $color-dark;
+  }
+
+  img {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.product-display__description {
+  margin-top: $spacing-sm;
+
+  h3 {
+    font-weight: $font-weight-bold;
+    font-size: $font-size-base;
+    color: $ctr-text;
+    margin-bottom: $spacing-xs;
+  }
+
+  p {
+    font-size: $font-size-sm;
+    color: $ctr-text;
+    line-height: 1.6;
+  }
+}
+
+.product-display__tags {
+  @include flex(row, flex-start, center, wrap);
+  gap: $spacing-xs;
+  margin-top: $spacing-xs;
+}
+
+.product-display__tag {
+  font-size: $font-size-xs;
+  color: $retro-text-green;
+  background: rgba($retro-green, 0.2);
+  padding: 2px $spacing-xs;
+  border-radius: $radius-sm;
+  font-family: $font-secondary;
+}
+
+// ============================================
+// Product List — vertical list view inside CRT
+// ============================================
+
+.product-list {
+  width: 100%;
+  max-height: clamp(260px, 38vh, 480px);
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: rgba($ctr-text, 0.3) transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: rgba($ctr-text, 0.3);
+    border-radius: 2px;
+  }
+}
+
+.product-list__item {
+  &.selected .product-list__row {
+    background: rgba($color-dark, 0.1);
+    border-radius: $radius-sm;
+  }
+}
+
+.product-list__row {
+  @include flex(row, flex-start, center);
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-xs;
+  cursor: pointer;
+  border-bottom: 1px solid rgba($ctr-text, 0.12);
+  transition: background $transition-fast;
+
+  &:hover {
+    background: rgba($color-dark, 0.06);
+    border-radius: $radius-sm;
+  }
+}
+
+.product-list__cursor {
+  width: 1.4rem;
+  flex-shrink: 0;
+  font-family: $font-secondary;
+  font-size: $font-size-sm;
+  color: $game-lines;
+  user-select: none;
+}
+
+.product-list__icon {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+  flex-shrink: 0;
+  background: transparent;
+}
+
+.product-list__name {
+  flex: 1;
+  font-family: $font-secondary;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+  color: $ctr-text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.product-list__price {
+  font-family: $font-secondary;
+  font-size: $font-size-xs;
+  color: $ctr-text;
+  flex-shrink: 0;
+}
+
+.product-list__desc {
+  padding: $spacing-xs $spacing-sm $spacing-sm 2.2rem;
+  font-size: $font-size-xs;
+  color: $ctr-text;
+  line-height: 1.55;
+  border-left: 2px solid $game-lines;
+  background: rgba($color-dark, 0.04);
+  margin-bottom: $spacing-xs;
+}
+
+// ============================================
+// Animated arcade button hint (A / B indicator)
+// ============================================
+
+.arcade-hint-btn {
+  @include flex(column, center, center);
+  flex-shrink: 0;
+  gap: 1px;
+
+  img {
+    width: 26px;
+    height: auto;
+    transition: transform 0.06s ease, filter 0.06s ease;
+
+    &.pressed {
+      transform: scale(0.80) translateY(3px);
+      filter: brightness(0.75);
+    }
+  }
+
+  &__letter {
+    font-family: $font-secondary;
+    font-weight: $font-weight-bold;
+    font-size: $font-size-sm;
+    color: $gray-600;
+    line-height: 1;
+  }
+}

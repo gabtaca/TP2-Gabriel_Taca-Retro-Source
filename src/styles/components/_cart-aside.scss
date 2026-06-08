@@ -1,0 +1,156 @@
+// ============================================
+// Cart Aside (slide-in panel)
+// ============================================
+
+.cart-aside {
+  @include fixed(0, null, 0, null);
+  right: calc(-1 * $aside-width);
+  width: $aside-width;
+  max-width: 90vw;
+  height: 100vh;
+  background: $aside-bg-color;
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.3);
+  border-radius: 1em;
+  border: 3px solid $game-lines;
+  font-family: $font-secondary;
+  z-index: $z-index-modal;
+  transition: transform $transition-base;
+  @include flex-column;
+
+  &.open {
+    transform: translateX(calc(-1 * $aside-width - 4px));
+  }
+}
+
+.cart-aside__overlay {
+  @include fixed(0, 0, 0, 0);
+  background: rgba(26, 46, 5, 0.4);
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
+  transition: opacity $transition-base;
+  z-index: calc($z-index-modal - 1);
+
+  &.open {
+    opacity: 1;
+    pointer-events: auto;
+    visibility: visible;
+  }
+}
+
+.cart-aside__header {
+  @include flex(row, space-between, center);
+  border-bottom: 4px double $game-lines;
+  height: $header-height;
+  padding: 0 $spacing-lg;
+
+  h2 {
+    font-size: $font-size-xl;
+    margin: 0;
+  }
+}
+
+.cart-aside__close {
+  @include button-reset;
+  font-size: 2.5rem;
+  font-weight: $font-weight-light;
+  opacity: 0.8;
+  line-height: 1;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.cart-aside__body {
+  flex: 1;
+  overflow-y: auto;
+  padding: $spacing-lg;
+}
+
+.cart-aside__empty {
+  text-align: center;
+  color: $gray-500;
+  padding: $spacing-2xl;
+  font-size: $font-size-sm;
+}
+
+.cart-line {
+  @include flex(row, flex-start, flex-start);
+  gap: $spacing-sm;
+  padding: $spacing-sm 0;
+  border-bottom: 1px solid $gray-300;
+}
+
+.cart-line__info {
+  flex: 1;
+  @include flex-column;
+  gap: $spacing-xs;
+}
+
+.cart-line__title {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-bold;
+}
+
+.cart-line__price {
+  font-size: $font-size-sm;
+  color: $gray-600;
+}
+
+.cart-line__qty {
+  font-size: $font-size-xs;
+  color: $gray-500;
+}
+
+.cart-line__remove {
+  @include button-reset;
+  color: $game-lines;
+  font-size: $font-size-sm;
+  line-height: 1;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}
+
+.cart-aside__footer {
+  padding: $spacing-lg;
+  border-top: 2px solid $gray-300;
+  @include flex-column;
+  gap: $spacing-sm;
+}
+
+.cart-aside__total {
+  @include flex(row, space-between, center);
+  font-weight: $font-weight-bold;
+  font-size: $font-size-base;
+}
+
+.cart-aside__checkout {
+  display: block;
+  text-align: center;
+  padding: $spacing-sm $spacing-lg;
+  background: $game-lines;
+  color: $color-light;
+  font-weight: $font-weight-bold;
+  font-family: $font-secondary;
+  border-radius: $radius-sm;
+  transition: opacity $transition-fast;
+
+  &:hover {
+    opacity: 0.85;
+  }
+}
+
+.cart-aside__clear {
+  @include button-reset;
+  text-align: center;
+  font-size: $font-size-xs;
+  color: $gray-500;
+  text-decoration: underline;
+
+  &:hover {
+    color: $gray-700;
+  }
+}

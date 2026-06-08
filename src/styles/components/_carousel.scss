@@ -1,0 +1,132 @@
+// ============================================
+// News Carousel Component
+// ============================================
+
+.carousel {
+  @include flex-column;
+  width: 100%;
+  gap: 0;
+  flex: 1;
+}
+
+// ── Full-width image ──────────────────────────
+.carousel__image-wrap {
+  position: relative;
+  width: 100%;
+  height: clamp(126px, 18vh, 240px); // mobile: 10% less
+  overflow: hidden;
+  border-radius: $radius-md;
+  flex-shrink: 0;
+
+  @include respond-to('lg') {
+    height: clamp(140px, 20vh, 240px); // desktop: full size
+  }
+}
+
+.carousel__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.carousel__badge {
+  position: absolute;
+  bottom: $spacing-xs;
+  right: $spacing-sm;
+  background: rgba($color-dark, 0.6);
+  color: $color-light;
+  font-family: $font-secondary;
+  font-size: $font-size-xs;
+  padding: 2px $spacing-xs;
+  border-radius: $radius-sm;
+  pointer-events: none;
+}
+
+// ── Article text ─────────────────────────────
+.carousel__content {
+  @include flex-column;
+  gap: $spacing-xs;
+  padding: $spacing-md 0 $spacing-sm;
+  flex: 1;
+}
+
+.carousel__news-title {
+  font-family: $font-display;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-bold;
+  color: $ctr-text;
+  line-height: 1.25;
+
+  @include respond-to('sm') {
+    font-size: $font-size-2xl;
+  }
+}
+
+.carousel__meta {
+  font-family: $font-secondary;
+  font-size: $font-size-xs;
+  color: rgba($ctr-text, 0.6);
+}
+
+.carousel__description {
+  font-size: $font-size-sm;
+  color: $ctr-text;
+  line-height: 1.55;
+  margin: 0;
+  // Clamp to 3 lines on small screens so the footer is always visible
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+
+  @include respond-to('sm') {
+    -webkit-line-clamp: unset;
+    overflow: visible;
+  }
+}
+
+.carousel__read-more {
+  color: #3b82f6;
+  font-family: $font-secondary;
+  font-size: $font-size-xs;
+  align-self: flex-start;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// ── Footer: centered dot indicators ──────────
+.carousel__footer {
+  @include flex(row, center, center);
+  padding-top: $spacing-sm;
+  border-top: 1px solid rgba($ctr-text, 0.2);
+  margin-top: auto;
+  flex-shrink: 0;
+}
+
+.carousel__indicators {
+  @include flex(row, center, center);
+  gap: $spacing-sm;
+}
+
+.carousel__dot {
+  width: 8px;
+  height: 8px;
+  border-radius: $radius-full;
+  background: rgba($ctr-text, 0.35);
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: background $transition-fast, transform $transition-fast;
+
+  &.active {
+    background: $ctr-text;
+    transform: scale(1.3);
+  }
+
+  &:hover:not(.active) {
+    background: rgba($ctr-text, 0.6);
+  }
+}

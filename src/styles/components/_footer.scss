@@ -1,0 +1,36 @@
+// ============================================
+// Footer Component
+// ============================================
+
+.footer {
+  background: $color-dark;
+  margin-top: auto;
+}
+
+.footer__menu {
+  @include flex(row, flex-start, center, wrap);
+  gap: $spacing-lg;
+  padding: $spacing-lg;
+
+  a {
+    color: $color-light;
+    font-family: $font-secondary;
+    font-size: $font-size-sm;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+.footer__credit {
+  @include flex(column, flex-end, flex-end);
+  padding: $spacing-lg;
+
+  p {
+    color: $zinc-200;
+    font-size: $font-size-sm;
+    font-family: $font-secondary;
+  }
+}
