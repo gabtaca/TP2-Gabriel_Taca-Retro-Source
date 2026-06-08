@@ -144,12 +144,17 @@
   @include button-reset;
   background: $gray-900;
   color: $color-light;
-  padding: $spacing-sm $spacing-lg;
+  padding: 2px $spacing-sm; // compact on mobile
   border-radius: $radius-sm;
   font-family: $font-secondary;
-  font-size: $font-size-sm;
+  font-size: $font-size-xs; // smaller on mobile
   cursor: pointer;
   transition: background $transition-fast;
+
+  @include respond-to('sm') {
+    padding: $spacing-sm $spacing-lg;
+    font-size: $font-size-sm;
+  }
 
   &:hover {
     background: $gray-700;

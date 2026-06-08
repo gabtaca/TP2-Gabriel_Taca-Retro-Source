@@ -120,7 +120,7 @@ export default function ProductsPage() {
     return () => window.removeEventListener('arcadeButtonPress', onBtn);
   }, []);
 
-  // Button handlers for mouse/touch
+  // Button handlers for mouse/touch (called from hints bar in card view)
   const doWishlist = () => {
     if (!selectedProduct) return;
     toggleWishlist(selectedProduct.id);
@@ -169,16 +169,67 @@ export default function ProductsPage() {
   return (
     <div className="products-page">
 
-      {/* Page header */}
-      <div className="products-page__header">
-        <h1 className="products-page__title">Products</h1>
-        <button className="filter-toggle-btn" onClick={openFilters}>
-          ☰ Filters
-          {(selectedTags.length + selectedCollections.length > 0) && (
-            <span> ({selectedTags.length + selectedCollections.length})</span>
-          )}
-        </button>
-      </div>
+      {/* Page header — list view only */}
+      {view === 'list' && (
+        <div className="products-page__header">
+          <h1 className="products-page__title">Products</h1>
+          <button className="filter-toggle-btn" onClick={openFilters}>
+            ☰ Filters
+            {(selectedTags.length + selectedCollections.length > 0) && (
+              <span> ({selectedTags.length + selectedCollections.length})</span>
+            )}
+          </button>
+        </div>
+      )}
+
+      {/* Card hints — at top, replacing the header in card view */}
+      {view === 'card' && (
+        <div className="products-page__hints products-page__hints--card">
+          <div className="arcade-nav-hint products-page__hint-btn" onClick={() => setView('list')}>
+            <span className="arcade-nav-btn arcade-nav-btn--left" aria-hidden="true">
+              <span className="arcade-nav-btn__inner"><img src="/images/left.svg" alt="" /></span>
+            </span>
+            <span className="arcade-nav-label">Back to list</span>
+          </div>
+          <div className="products-page__hints-actions">
+            <div className="arcade-action-hint products-page__hint-btn" onClick={doWishlist}>
+              <AnimatedArcadeButton letter="A" />
+              <span className="arcade-action-hint__label">
+                {wishlisted ? 'Remove wishlist' : 'Wishlist'}
+              </span>
+            </div>
+            <div className="arcade-action-hint products-page__hint-btn" onClick={doCart}>
+              <AnimatedArcadeButton letter="B" delay={400} />
+              <span className="arcade-action-hint__label">Add to cart</span>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* List hints — at top, above the product list */}
+      {view === 'list' && (
+        <div className="products-page__hints products-page__hints--list">
+          <div className="arcade-nav-hint">
+            <span className="arcade-nav-btn arcade-nav-btn--left" aria-hidden="true">
+              <span className="arcade-nav-btn__inner"><img src="/images/left.svg" alt="" /></span>
+            </span>
+            <span className="arcade-nav-label">Navigate</span>
+            <span className="arcade-nav-btn arcade-nav-btn--right" aria-hidden="true">
+              <span className="arcade-nav-btn__inner"><img src="/images/right.svg" alt="" /></span>
+            </span>
+          </div>
+          <div className="products-page__hints-actions">
+            <div className="arcade-action-hint">
+              <AnimatedArcadeButton letter="A" />
+              <span className="arcade-action-hint__label">Open game</span>
+            </div>
+            <div className="arcade-action-hint">
+              <AnimatedArcadeButton letter="B" delay={400} />
+              <span className="arcade-action-hint__label">Toggle details</span>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Content area */}
       <div className={`products-page__content ${view === 'list' ? 'list-view' : 'card-view'}`}>
@@ -204,7 +255,7 @@ export default function ProductsPage() {
                     onDoubleClick={() => { setSelectedIndex(i); setView('card'); }}
                   >
                     <span className="product-list__cursor">
-                      {i === selectedIndex ? '▶' : '  '}
+                      {i === selectedIndex ? '▶' : '  '}
                     </span>
                     {product.icon && (
                       <img className="product-list__icon" src={product.icon} alt="" aria-hidden="true" />
@@ -224,110 +275,45 @@ export default function ProductsPage() {
           /* ── CARD VIEW ── */
           selectedProduct ? (
             <div className="product-display">
-              {/* Image — vertically centered via align-items: center on parent row */}
-              <div className="product-display__image">
-                <img
-                  src={selectedProduct.image}
-                  alt={selectedProduct.imageAlt}
-                  onError={(e) => { e.target.src = '/images/logo_arcade.png'; }}
-                />
+              {/* Top row: image + basic info */}
+              <div className="product-display__row">
+                <div className="product-display__image">
+                  <img
+                    src={selectedProduct.image}
+                    alt={selectedProduct.imageAlt}
+                    onError={(e) => { e.target.src = '/images/logo_arcade.png'; }}
+                  />
+                </div>
+                <div className="product-display__info">
+                  <h2 className="product-display__title">{selectedProduct.title}</h2>
+                  <p className="product-display__price">{formatPrice(selectedProduct.price)}</p>
+                </div>
               </div>
 
-              {/* Info */}
-              <div className="product-display__info">
-                <button className="product-display__back" onClick={() => setView('list')}>
-                  ← Back to list
-                </button>
-
-                <h2 className="product-display__title">{selectedProduct.title}</h2>
-                <p className="product-display__price">{formatPrice(selectedProduct.price)}</p>
-
-                <div className="product-display__actions">
-                  {/* A — Wishlist */}
-                  <div className="product-display__action-row">
-                    <AnimatedArcadeButton letter="A" delay={0} />
-                    <button
-                      className="product-display__action-btn"
-                      onClick={doWishlist}
-                      aria-label={wishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-                    >
-                      {wishlisted ? '🗑️ FROM WISHLIST' : 'ADD TO WISHLIST'}
-                      <img src={wishlisted ? '/images/star.png' : '/images/star.svg'} alt="" />
-                    </button>
-                    {starParticles && <StarParticles />}
-                  </div>
-
-                  {/* B — Cart */}
-                  <div className="product-display__action-row">
-                    <AnimatedArcadeButton letter="B" delay={600} />
-                    <button
-                      className="product-display__action-btn"
-                      onClick={doCart}
-                      aria-label="Add to cart"
-                    >
-                      🛒 ADD TO CART
-                      <img src="/images/coin.png" alt="" />
-                    </button>
-                    {coinParticles && <CoinParticles />}
-                  </div>
-                </div>
-
-                <div className="product-display__description">
-                  <h3>Description</h3>
-                  <p>{selectedProduct.description}</p>
-                </div>
-
-                <div className="product-display__tags">
-                  {[...selectedProduct.tags, ...selectedProduct.collections].map((t) => (
-                    <span key={t} className="product-display__tag">{t}</span>
-                  ))}
-                </div>
+              {/* Full-width description */}
+              <div className="product-display__description">
+                <h3>Description</h3>
+                <p>{selectedProduct.description}</p>
               </div>
             </div>
           ) : null
         )}
       </div>
 
-      {/* Contextual hint bar */}
-      <div className="products-page__hints">
-        {view === 'list' ? (
-          <>
-            <div className="arcade-nav-hint">
-              <span className="arcade-nav-btn arcade-nav-btn--left" aria-hidden="true">
-                <span className="arcade-nav-btn__inner"><img src="/images/left.svg" alt="" /></span>
-              </span>
-              <span className="arcade-nav-btn arcade-nav-btn--right" aria-hidden="true">
-                <span className="arcade-nav-btn__inner"><img src="/images/right.svg" alt="" /></span>
-              </span>
-              <span className="arcade-nav-label">Navigate</span>
-            </div>
-            <div className="arcade-action-hint">
-              <AnimatedArcadeButton letter="A" />
-              <span className="arcade-action-hint__label">Open game</span>
-            </div>
-            <div className="arcade-action-hint">
-              <AnimatedArcadeButton letter="B" delay={400} />
-              <span className="arcade-action-hint__label">Toggle details</span>
-            </div>
-          </>
-        ) : (
-          <>
-            <div className="arcade-nav-hint">
-              <span className="arcade-nav-btn arcade-nav-btn--left" aria-hidden="true">
-                <span className="arcade-nav-btn__inner"><img src="/images/left.svg" alt="" /></span>
-              </span>
-              <span className="arcade-nav-label">Back to list</span>
-            </div>
-            <div className="arcade-action-hint">
-              <AnimatedArcadeButton letter="A" />
-              <span className="arcade-action-hint__label">Wishlist</span>
-            </div>
-            <div className="arcade-action-hint">
-              <AnimatedArcadeButton letter="B" delay={400} />
-              <span className="arcade-action-hint__label">Add to cart</span>
-            </div>
-          </>
-        )}
+      {/* Card view hints — at bottom */}
+      {/* Tags — below card content */}
+      {view === 'card' && selectedProduct && (
+        <div className="product-display__tags">
+          {[...selectedProduct.tags, ...selectedProduct.collections].map((t) => (
+            <span key={t} className="product-display__tag">{t}</span>
+          ))}
+        </div>
+      )}
+
+      {/* Particles anchored to bottom of CRT */}
+      <div className="products-page__particles">
+        {starParticles && <StarParticles />}
+        {coinParticles && <CoinParticles />}
       </div>
 
       <FilterSection

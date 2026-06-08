@@ -27,6 +27,26 @@
 
 .faq-item {
   border-bottom: 1px solid rgba($ctr-text, 0.2);
+
+  &.selected .faq-question {
+    color: $retro-text-green;
+  }
+}
+
+.faq-question__cursor {
+  width: 1rem;
+  flex-shrink: 0;
+  font-family: $font-secondary;
+  font-size: $font-size-xs;
+  color: $game-lines;
+
+  &::after {
+    content: ''; // empty by default
+  }
+}
+
+.faq-item.selected .faq-question__cursor::after {
+  content: '▶';
 }
 
 .faq-question {
@@ -53,6 +73,11 @@
   }
 }
 
+// Text takes remaining space between cursor and arrow
+.faq-question__text {
+  flex: 1;
+}
+
 .faq-question__arrow {
   font-size: $font-size-lg;
   transition: transform $transition-fast;
@@ -69,4 +94,15 @@
   font-size: $font-size-sm;
   color: $ctr-text;
   line-height: 1.7;
+}
+
+// Arcade hint bar at the bottom (mirrors products-page__hints)
+.faq-page__hints {
+  @include flex(row, center, center);
+  gap: $spacing-2xl;
+  width: 100%;
+  margin-top: $spacing-sm;
+  padding-top: $spacing-sm;
+  border-top: 1px solid rgba($ctr-text, 0.2);
+  flex-wrap: wrap;
 }

@@ -38,15 +38,28 @@
     align-items: center;
     min-height: $header-height;
     gap: $spacing-lg;
+    position: relative; // anchor for absolutely-centered brand on mobile
   }
 }
 
 // Logo / Brand
+// On mobile: absolutely centered. On desktop: leftmost in flow.
 .header__brand {
   @include flex(column, center, center);
   flex-shrink: 0;
   text-decoration: none;
   color: $color-dark;
+  padding-top: 5px;
+
+  // Center in header bar on mobile
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+
+  @include respond-to('md') {
+    position: static;
+    transform: none;
+  }
 
   img {
     height: 40px;
@@ -181,14 +194,45 @@
   }
 }
 
-// Mobile menu toggle
+// Mobile menu toggle — leftmost on mobile, hidden on desktop
 .header__mobile-toggle {
   @include button-reset;
-  font-size: $font-size-2xl;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
 
   @include respond-to('md') {
     display: none;
+  }
+}
+
+// 3-line hamburger with diode glow
+.header__mobile-lines {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 22px;
+  animation: diode-pulse 2s ease-in-out infinite;
+}
+
+.header__mobile-line {
+  display: block;
+  width: 100%;
+  height: 3px;
+  border-radius: 2px;
+  background: $game-lines;
+  box-shadow: 0 0 4px $game-lines, 0 0 10px rgba($game-lines, 0.5);
+}
+
+@keyframes diode-pulse {
+  0%, 100% {
+    opacity: 1;
+    filter: brightness(1);
+  }
+  50% {
+    opacity: 0.45;
+    filter: brightness(0.6);
   }
 }
 

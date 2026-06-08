@@ -6,20 +6,30 @@
   @include flex-column;
   width: 100%;
   flex: 1;
+  position: relative; // anchor for particle host
 }
 
 .products-page__header {
   @include flex(row, space-between, center);
   width: 100%;
-  margin-bottom: $spacing-sm;
   flex-wrap: wrap;
-  gap: $spacing-sm;
+  gap: 2px; // tight on mobile
+  padding: 2px 0;
+
+  @include respond-to('sm') {
+    gap: $spacing-sm;
+    padding: 0;
+  }
 }
 
 .products-page__title {
   font-family: $font-display;
-  font-size: $font-size-2xl;
+  font-size: $font-size-base; // compact on mobile
   color: $ctr-text;
+
+  @include respond-to('sm') {
+    font-size: $font-size-2xl;
+  }
 }
 
 .products-page__content {
@@ -35,12 +45,12 @@
 
   // Card view: content stretches to fill
   &.card-view {
-    justify-content: center;
+    justify-content: flex-start;
     align-items: stretch;
   }
 }
 
-// Hint bar (inside the shared CRT screen)
+// Hint bar — list view (single row)
 .products-page__hints {
   @include flex(row, center, center);
   gap: $spacing-2xl;
@@ -49,6 +59,60 @@
   padding-top: $spacing-sm;
   border-top: 1px solid rgba($ctr-text, 0.2);
   flex-wrap: wrap;
+}
+
+// Hint bar — list view (navigate row on top, A/B row below, all centered)
+.products-page__hints--list {
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-xs;
+  margin-top: 0;
+  margin-bottom: $spacing-xs;
+  border-top: none;
+  border-bottom: 1px solid rgba($ctr-text, 0.2);
+  padding-top: 0;
+  padding-bottom: $spacing-sm;
+}
+
+// Hint bar — card view (back to list on top, A/B row below)
+.products-page__hints--card {
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-xs;
+  border-top: none;
+  margin-top: 0;
+  padding-top: 0;
+  border-bottom: 1px solid rgba($ctr-text, 0.2);
+  padding-bottom: 4px;
+  margin-bottom: 4px;
+}
+
+// A + B buttons row inside card hints
+.products-page__hints-actions {
+  @include flex(row, space-between, center);
+  gap: 0;
+  width: 100%;
+
+  @include respond-to('sm') {
+    justify-content: center;
+    gap: $spacing-2xl;
+    width: auto;
+  }
+}
+
+// Make A/B hint items clickable in card view
+.products-page__hint-btn {
+  cursor: pointer;
+}
+
+// Particle host — anchored to the bottom of the CRT content area
+.products-page__particles {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 140px;
+  pointer-events: none;
 }
 
 .products-page__empty {

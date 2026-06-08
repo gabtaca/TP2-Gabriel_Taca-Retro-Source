@@ -19,7 +19,20 @@ export default function Header({ onSearchOpen }) {
         <div className="header__border-1">
           <div className="header__border-2">
             <div className="header__border-3">
-              {/* Brand */}
+              {/* Mobile burger — leftmost on mobile, hidden on desktop */}
+              <button
+                className="header__mobile-toggle reset"
+                onClick={() => setMobileOpen(true)}
+                aria-label="Open menu"
+              >
+                <span className="header__mobile-lines" aria-hidden="true">
+                  <span className="header__mobile-line" />
+                  <span className="header__mobile-line" />
+                  <span className="header__mobile-line" />
+                </span>
+              </button>
+
+              {/* Brand — centered on mobile, left on desktop */}
               <NavLink to="/" className="header__brand">
                 <img src={SHOP.logo} alt={`${SHOP.name} Logo`} />
                 <strong>{SHOP.name}</strong>
@@ -59,7 +72,7 @@ export default function Header({ onSearchOpen }) {
                 )}
               </nav>
 
-              {/* CTAs */}
+              {/* CTAs — search + cart only (toggle moved out) */}
               <nav className="header__ctas" aria-label="Utilities">
                 <button
                   className="header__search-btn reset"
@@ -80,14 +93,6 @@ export default function Header({ onSearchOpen }) {
                     {totalQuantity > 0 ? totalQuantity : ''}
                   </span>
                   <img src="/images/cart.svg" alt="" />
-                </button>
-
-                <button
-                  className="header__mobile-toggle reset"
-                  onClick={() => setMobileOpen(true)}
-                  aria-label="Open menu"
-                >
-                  ☰
                 </button>
               </nav>
             </div>

@@ -109,12 +109,19 @@
   }
 }
 
+// Wrapper that sizes/positions the CRT and anchors the scroll indicator
+.page-crt-wrap {
+  width: 95%;
+  max-width: 56rem;
+  margin: 0 auto;
+  position: relative; // anchor for .crt-scroll-indicator
+}
+
 // Shared CRT screen — used by PageLayout to wrap all page content
 .page-crt {
   @include crt-screen;
-  width: 95%;
-  max-width: 56rem;
-  margin: 0 auto; // vertical spacing comes from main's padding
+  width: 100%; // fills the wrapper
+  position: relative; // needed if any children use absolute
   height: clamp(284px, 45vh, 591px); // mobile: ~17% less than desktop
   padding: 20px;
   overflow-y: auto;
@@ -126,4 +133,43 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+// CRT scroll-position indicator — floats at the right-center of the wrapper
+// Positioned outside .page-crt so it's unaffected by overflow clipping
+.crt-scroll-indicator {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.crt-scroll-indicator__arrow {
+  font-family: $font-secondary;
+  font-size: 16px;
+  color: $ctr-text;
+  line-height: 1;
+  display: block;
+
+  &--up  { animation: scroll-arrow-pulse 2.4s ease-in-out infinite; }
+  &--down { animation: scroll-arrow-pulse 2.4s ease-in-out infinite; animation-delay: -1.2s; }
+}
+
+.crt-scroll-indicator__sep {
+  font-family: $font-secondary;
+  font-size: 12px;
+  color: rgba($ctr-text, 0.5);
+  line-height: 1;
+}
+
+@keyframes scroll-arrow-pulse {
+  0%, 35%  { transform: scale(0.9); }
+  50%, 85% { transform: scale(0.7); }
+  100%     { transform: scale(0.9); }
 }
