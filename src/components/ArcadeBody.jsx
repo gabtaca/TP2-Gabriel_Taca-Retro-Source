@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useCrt } from '../context/CrtContext';
 
 function playSound(file) {
   try {
@@ -12,9 +14,24 @@ function playSound(file) {
 export default function ArcadeBody() {
   const [pressedA, setPressedA] = useState(false);
   const [pressedB, setPressedB] = useState(false);
+  const [power, setPower] = useState(true);
+  const navigate = useNavigate();
+  const { startBoot } = useCrt();
 
   const dispatch = (name, detail) =>
     window.dispatchEvent(new CustomEvent(name, { detail }));
+
+  const handlePower = () => {
+    if (power) {
+      setPower(false);
+      navigate('/power-off');
+    } else {
+      startBoot(() => {
+        setPower(true);
+        navigate('/');
+      });
+    }
+  };
 
   return (
     <div className="arcade-body">
@@ -103,6 +120,19 @@ export default function ArcadeBody() {
           </nav>
         </div>
 
+        {/* Power button row */}
+        <div className="arcade-body__power-row">
+          <button
+            className={`arcade-body__power-btn${power ? ' on' : ''}`}
+            onClick={handlePower}
+            aria-pressed={power}
+            aria-label={power ? 'Power off' : 'Power on'}
+          >
+            POWER
+          </button>
+          <span className={`arcade-body__power-led${power ? ' on' : ''}`} aria-hidden="true" />
+        </div>
+
         {/* Banner */}
         <div className="arcade-body__banner">
           <img src="/images/retrosource_banner_main.png" alt="Retro Source" />
@@ -111,6 +141,7 @@ export default function ArcadeBody() {
         <div className="arcade-body__spacer" />
         <div className="arcade-body__bottom-gradient" />
       </div>
+
     </div>
   );
 }

@@ -1,54 +1,36 @@
 // ============================================
 // Error / 404 Page
+// Renders inside the shared .page-crt — no inner CRT wrapper needed.
 // ============================================
 
+// Fills the shared CRT and centres content
+// The snow GIF is applied as a background on .page-crt--snow by PageLayout/CrtContext
 .error-page {
+  flex: 1;
   @include flex(column, center, center);
-  min-height: 60vh;
-  width: 100%;
   gap: $spacing-lg;
-}
-
-.error-page__crt {
-  @include flex(column, center, center);
-  width: 90%;
-  max-width: 56rem;
-  min-height: 250px;
-  border-radius: $radius-lg;
-  background-image: url('/images/tv_snow.gif');
-  background-size: cover;
-  padding: $spacing-2xl;
-  box-shadow: $shadow-crt-inset, $shadow-crt-outer;
-
-  @include respond-to('sm') {
-    min-height: 500px;
-  }
-
-  @include respond-to('md') {
-    min-height: 700px;
-  }
-}
-
-.error-page__text {
   text-align: center;
-  color: $color-light;
+}
+
+.error-page__title {
   font-family: $font-display;
+  font-size: $font-size-4xl;
+  color: $color-light;
+  margin: 0;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+}
 
-  h1 {
-    font-size: $font-size-4xl;
-    margin-bottom: $spacing-sm;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
-  }
-
-  p {
-    font-size: $font-size-lg;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
-  }
+.error-page__msg {
+  font-family: $font-display;
+  font-size: $font-size-lg;
+  color: $color-light;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
 }
 
 .error-page__link {
   display: inline-block;
-  margin-top: $spacing-lg;
+  margin-top: $spacing-sm;
   padding: $spacing-sm $spacing-xl;
   background: $game-lines;
   color: $color-light;

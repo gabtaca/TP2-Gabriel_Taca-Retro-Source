@@ -35,7 +35,7 @@
   @include flex(row, center, center);
   width: 100%;
   gap: $spacing-2xl;
-  padding: $spacing-lg $spacing-lg $spacing-4xl;
+  padding: $spacing-lg $spacing-lg $spacing-2xl;
 }
 
 // D-pad / nav buttons
@@ -138,6 +138,112 @@
     object-fit: cover;
     border-radius: 0;
   }
+}
+
+// Power button row
+.arcade-body__power-row {
+  @include flex(row, center, center);
+  gap: $spacing-sm;
+  padding: 0 0 $spacing-xl;
+}
+
+.arcade-body__power-btn {
+  font-family: $font-secondary;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-bold;
+  letter-spacing: 0.12em;
+  color: $zinc-200;
+  background: $zinc-700;
+  border: 2px solid $zinc-900;
+  border-bottom-width: 4px;
+  border-radius: $radius-sm;
+  padding: 5px 14px;
+  cursor: pointer;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+  transition: filter $transition-fast;
+
+  // ON = pressed down
+  &.on {
+    border-bottom-width: 2px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.4), inset 0 2px 4px rgba(0, 0, 0, 0.35);
+    transform: translateY(2px);
+  }
+
+  &:hover {
+    filter: brightness(1.2);
+  }
+}
+
+.arcade-body__power-led {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: $radius-full;
+  background: $zinc-800;
+  border: 1px solid $zinc-700;
+  transition: background $transition-fast, box-shadow $transition-fast;
+
+  // ON = steady red glow
+  &.on {
+    background: $game-lines;
+    box-shadow: 0 0 5px $game-lines, 0 0 12px rgba($game-lines, 0.55);
+  }
+}
+
+// ============================================
+// Boot screen overlay (portal to document.body)
+// ============================================
+
+.power-boot {
+  flex: 1;
+  @include flex-center;
+  font-family: $font-secondary;
+}
+
+.power-boot__inner {
+  @include flex(column, flex-start, flex-start);
+  gap: $spacing-md;
+  width: 90%;
+  max-width: 420px;
+}
+
+.power-boot__line {
+  font-size: $font-size-xs;
+  color: $retro-green;
+  margin: 0;
+  line-height: 1.5;
+  text-shadow: 0 0 6px rgba($retro-green, 0.7);
+}
+
+.power-boot__line--blink {
+  animation: boot-blink 0.8s step-end infinite;
+}
+
+.power-boot__bar-wrap {
+  width: 100%;
+  height: 14px;
+  border: 1px solid rgba($retro-green, 0.5);
+  background: rgba($retro-green, 0.08);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.power-boot__bar {
+  height: 100%;
+  width: 0%;
+  background: $retro-green;
+  box-shadow: 0 0 8px rgba($retro-green, 0.8);
+  animation: boot-progress 1.9s linear forwards;
+}
+
+@keyframes boot-progress {
+  from { width: 0%; }
+  to   { width: 100%; }
+}
+
+@keyframes boot-blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
 }
 
 // ============================================

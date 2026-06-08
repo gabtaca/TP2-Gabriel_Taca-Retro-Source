@@ -63,6 +63,10 @@
     position: relative;
     z-index: 2;
   }
+
+  // <main> gets z-index:2 from > * above — this is intentional.
+  // The filter panel (FilterSection) uses createPortal(…, document.body) so it
+  // lives outside this stacking context entirely and is unaffected by <main>'s z-index.
 }
 
 // Live indicator — positioned to the right of the CRT screen
@@ -115,6 +119,18 @@
   max-width: 56rem;
   margin: 0 auto;
   position: relative; // anchor for .crt-scroll-indicator
+  z-index: 2; // lifts CRT above page-stage ::after overlay (z-index:1) now that <main> has no z-index
+}
+
+// CRT background variants — applied by PageLayout via CrtContext
+.page-crt--snow {
+  background-image: url('/images/tv_snow.gif') !important;
+  background-size: cover;
+  background-position: center;
+}
+
+.page-crt--booting {
+  background: #050505 !important;
 }
 
 // Shared CRT screen — used by PageLayout to wrap all page content

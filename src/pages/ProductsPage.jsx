@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { PRODUCTS, formatPrice } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { useWishlist } from '../context/WishlistContext';
@@ -10,6 +10,7 @@ import { StarParticles, CoinParticles } from '../components/Particles';
 export default function ProductsPage() {
   const [searchParams] = useSearchParams();
   const searchQuery = searchParams.get('search') || '';
+  const navigate = useNavigate();
 
   // Filter state
   const [selectedTags, setSelectedTags] = useState([]);
@@ -66,12 +67,23 @@ export default function ProductsPage() {
   const filteredRef = useRef([]);
   const wishlistedRef = useRef(false);
   const actionsRef = useRef({});
+  const searchQueryRef = useRef(searchQuery);
 
   useEffect(() => { viewRef.current = view; }, [view]);
   useEffect(() => { selectedIndexRef.current = selectedIndex; }, [selectedIndex]);
   useEffect(() => { filteredRef.current = filtered; });   // every render
   useEffect(() => { wishlistedRef.current = wishlisted; }, [wishlisted]);
+  useEffect(() => { searchQueryRef.current = searchQuery; }, [searchQuery]);
   actionsRef.current = { toggleWishlist, addToCart, openCart };
+
+  // If a search is active, "back to list" clears it; otherwise just flip the view
+  const goBackToList = () => {
+    if (searchQueryRef.current) {
+      navigate('/products');
+    } else {
+      setView('list');
+    }
+  };
 
   // Arcade arrows — registered once
   useEffect(() => {
@@ -82,7 +94,10 @@ export default function ProductsPage() {
         if (e.detail === 'LEFT') setSelectedIndex((i) => (i === 0 ? len - 1 : i - 1));
         if (e.detail === 'RIGHT') setSelectedIndex((i) => (i === len - 1 ? 0 : i + 1));
       } else if (viewRef.current === 'card') {
-        if (e.detail === 'LEFT') setView('list');
+        if (e.detail === 'LEFT') {
+          if (searchQueryRef.current) navigate('/products');
+          else setView('list');
+        }
       }
     };
     window.addEventListener('arcadeNavigation', onNav);
@@ -169,6 +184,17 @@ export default function ProductsPage() {
   return (
     <div className="products-page">
 
+      {/* Search close button — only in list view so it disappears when a game is opened */}
+      {searchQuery && view === 'list' && (
+        <button
+          className="products-page__search-close"
+          onClick={() => navigate('/products')}
+          aria-label="Clear search and return to full list"
+        >
+          ✕ {searchQuery}
+        </button>
+      )}
+
       {/* Page header — list view only */}
       {view === 'list' && (
         <div className="products-page__header">
@@ -185,7 +211,7 @@ export default function ProductsPage() {
       {/* Card hints — at top, replacing the header in card view */}
       {view === 'card' && (
         <div className="products-page__hints products-page__hints--card">
-          <div className="arcade-nav-hint products-page__hint-btn" onClick={() => setView('list')}>
+          <div className="arcade-nav-hint products-page__hint-btn" onClick={goBackToList}>
             <span className="arcade-nav-btn arcade-nav-btn--left" aria-hidden="true">
               <span className="arcade-nav-btn__inner"><img src="/images/left.svg" alt="" /></span>
             </span>

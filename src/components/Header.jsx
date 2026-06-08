@@ -1,11 +1,19 @@
 import { useState } from 'react';
-import { NavLink, Link } from 'react-router-dom';
+import { NavLink, Link, useLocation } from 'react-router-dom';
 import { HEADER_MENU, SHOP } from '../data/navigation';
 import { useCart } from '../context/CartContext';
+
+// Maps nav item id → colour-specific CSS class for the pulsing active glow
+const NAV_COLOR = { '1': 'nav-home', '2': 'nav-products' };
 
 export default function Header({ onSearchOpen }) {
   const { totalQuantity, openCart } = useCart();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const location = useLocation();
+
+  // Detect if any MENU child route is currently active
+  const menuChildren = HEADER_MENU.find((i) => i.items)?.items ?? [];
+  const menuActive = menuChildren.some((c) => location.pathname.startsWith(c.url));
 
   const allMobileLinks = HEADER_MENU.flatMap((item) =>
     item.items
@@ -43,7 +51,11 @@ export default function Header({ onSearchOpen }) {
                 {HEADER_MENU.map((item) =>
                   item.items ? (
                     <div className="header__nav-item" key={item.id}>
-                      <button className="header__nav-link">{item.title}</button>
+                      <button
+                        className={`header__nav-link nav-menu${menuActive ? ' active' : ''}`}
+                      >
+                        {item.title}
+                      </button>
                       <ul className="header__submenu">
                         {item.items.map((child) => (
                           <li key={child.id}>
@@ -62,7 +74,7 @@ export default function Header({ onSearchOpen }) {
                       key={item.id}
                       to={item.url}
                       className={({ isActive }) =>
-                        `header__nav-link${isActive ? ' active' : ''}`
+                        `header__nav-link ${NAV_COLOR[item.id] ?? ''}${isActive ? ' active' : ''}`
                       }
                       end={item.url === '/'}
                     >

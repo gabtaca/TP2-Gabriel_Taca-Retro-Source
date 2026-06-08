@@ -4,10 +4,21 @@ import Header from './Header';
 import Footer from './Footer';
 import ArcadeBody from './ArcadeBody';
 import CartAside from './CartAside';
+import { CrtContext } from '../context/CrtContext';
 
 export default function PageLayout({ children }) {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [crtVariant, setCrtVariant] = useState(null);
+  const [booting, setBooting] = useState(false);
   const navigate = useNavigate();
+
+  const startBoot = useCallback((onComplete) => {
+    setBooting(true);
+    setTimeout(() => {
+      setBooting(false);
+      onComplete?.();
+    }, 2400);
+  }, []);
 
   // ── CRT Scroll Indicator ────────────────────────────────────
   const crtRef = useRef(null);
@@ -48,8 +59,15 @@ export default function PageLayout({ children }) {
   const showUp   = canScroll && !atTop;
   const showDown = canScroll && !atBottom;
 
+  // Only apply snow when not booting (boot takes visual precedence)
+  const crtClass = [
+    'page-crt',
+    !booting && crtVariant === 'snow' ? 'page-crt--snow' : '',
+    booting ? 'page-crt--booting' : '',
+  ].filter(Boolean).join(' ');
+
   return (
-    <>
+    <CrtContext.Provider value={{ crtVariant, setCrtVariant, startBoot }}>
       <CartAside />
 
       <Header onSearchOpen={() => setSearchOpen(true)} />
@@ -129,8 +147,21 @@ export default function PageLayout({ children }) {
       <div className="page-stage">
         <main>
           <div className="page-crt-wrap">
-            <div className="page-crt" ref={crtRef}>
-              {children}
+            <div className={crtClass} ref={crtRef}>
+              {booting ? (
+                <div className="power-boot">
+                  <div className="power-boot__inner">
+                    <p className="power-boot__line">RETRO-SOURCE ARCADE v1.0</p>
+                    <p className="power-boot__line">INITIALIZING SYSTEM...</p>
+                    <div className="power-boot__bar-wrap">
+                      <div className="power-boot__bar" />
+                    </div>
+                    <p className="power-boot__line power-boot__line--blink">LOADING...</p>
+                  </div>
+                </div>
+              ) : (
+                children
+              )}
             </div>
 
             {/* Scroll position indicator — outside the overflow container */}
@@ -153,6 +184,6 @@ export default function PageLayout({ children }) {
       </div>
 
       <Footer />
-    </>
+    </CrtContext.Provider>
   );
 }

@@ -26,9 +26,12 @@
   font-family: $font-display;
   font-size: $font-size-base; // compact on mobile
   color: $ctr-text;
+  margin: 0;
+  line-height: 1;
 
   @include respond-to('sm') {
     font-size: $font-size-2xl;
+    line-height: normal;
   }
 }
 
@@ -113,6 +116,29 @@
   right: 0;
   height: 140px;
   pointer-events: none;
+}
+
+// Search close — sticky pill at top-center of CRT, visible when ?search= is active
+.products-page__search-close {
+  @include button-reset;
+  position: sticky;
+  top: 0;
+  align-self: center;
+  z-index: 2;
+  background: $gray-400;
+  color: $game-lines;
+  font-family: $font-secondary;
+  font-size: $font-size-xs;
+  padding: 3px $spacing-md;
+  border-radius: $radius-full;
+  border: 2px solid $color-light;
+  box-shadow: 0 0 0 3px $gray-400, $shadow-md;
+  cursor: pointer;
+  max-width: 80%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-bottom: $spacing-xs;
 }
 
 .products-page__empty {

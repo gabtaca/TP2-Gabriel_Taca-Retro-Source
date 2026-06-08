@@ -90,6 +90,18 @@
 .header__nav-item {
   position: relative;
 
+  // Invisible bridge that fills the gap between the button and dropdown.
+  // Without this the mouse crosses empty space, hover breaks, and the menu
+  // collapses before the user can reach it.
+  &::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    height: 8px; // matches the gap in .header__submenu top
+  }
+
   &:hover .header__submenu {
     display: block;
   }
@@ -272,5 +284,62 @@
 
   &:hover {
     text-decoration: underline;
+  }
+}
+
+// ============================================
+// Desktop nav — active link pulsating diode glow
+// .nav-home (red) | .nav-products (blue) | .nav-menu (green)
+// Only active at desktop breakpoint; keyframes defined below.
+// ============================================
+
+@include respond-to('md') {
+  .header__nav-link.nav-home.active {
+    text-decoration: none;
+    animation: nav-diode-home 3s ease-in-out infinite;
+  }
+
+  .header__nav-link.nav-products.active {
+    text-decoration: none;
+    animation: nav-diode-products 3s ease-in-out infinite;
+  }
+
+  .header__nav-link.nav-menu.active,
+  .header__nav-link.nav-menu:hover {
+    text-decoration: none;
+    animation: nav-diode-menu 3s ease-in-out infinite;
+  }
+}
+
+@keyframes nav-diode-home {
+  0%, 100% {
+    color: $game-lines;
+    text-shadow: 0 0 8px rgba($game-lines, 0.9), 0 0 20px rgba($game-lines, 0.45);
+  }
+  50% {
+    color: rgba($game-lines, 0.5);
+    text-shadow: 0 0 3px rgba($game-lines, 0.25);
+  }
+}
+
+@keyframes nav-diode-products {
+  0%, 100% {
+    color: #4db8ff;
+    text-shadow: 0 0 8px rgba(#4db8ff, 0.9), 0 0 20px rgba(#4db8ff, 0.45);
+  }
+  50% {
+    color: rgba(#4db8ff, 0.5);
+    text-shadow: 0 0 3px rgba(#4db8ff, 0.25);
+  }
+}
+
+@keyframes nav-diode-menu {
+  0%, 100% {
+    color: $retro-green;
+    text-shadow: 0 0 8px rgba($retro-green, 0.9), 0 0 20px rgba($retro-green, 0.45);
+  }
+  50% {
+    color: rgba($retro-green, 0.5);
+    text-shadow: 0 0 3px rgba($retro-green, 0.25);
   }
 }

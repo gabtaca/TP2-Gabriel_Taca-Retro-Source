@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import { TAGS, COLLECTIONS } from '../data/products';
 
 export default function FilterSection({
@@ -10,7 +11,7 @@ export default function FilterSection({
   isOpen,
   onClose,
 }) {
-  return (
+  return createPortal(
     <div className={`filter-panel${isOpen ? ' open' : ''}`} role="dialog" aria-modal="true" aria-label="Filters">
       {/* Backdrop */}
       <div className="filter-panel__overlay" onClick={onClose} />
@@ -69,6 +70,7 @@ export default function FilterSection({
           </button>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

@@ -14,7 +14,7 @@ export default function Footer() {
         ))}
       </nav>
       <div className="footer__credit">
-        <p>This website has been created for fun by <a href="https://gabrieltaca.com" target="_blank" rel="noopener noreferrer">Gabriel Taca</a>.</p>
+        <p>This website has been created for <span className="footer__fun">fun</span> by <a className="footer__credit-link" href="https://gabrieltaca.com" target="_blank" rel="noopener noreferrer">Gabriel Taca</a>.</p>
         <p>&copy; 2024. All Rights Reserved.</p>
       </div>
     </footer>
