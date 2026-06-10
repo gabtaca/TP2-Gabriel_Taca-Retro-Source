@@ -11,8 +11,8 @@
 // The GIF is absolutely positioned behind the transparent frame center.
 .policies-page__frame-wrap {
   position: relative;
-  width: 80%;
-  max-width: 300px;
+  width: 100%;
+  max-width: 400px;
 }
 
 .policies-page__frame {
@@ -26,9 +26,10 @@
 
 .policies-page__gif {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  top: 19%;
+  left: 20%;
+  width: 62%;
+  height: 63%;
   object-fit: cover;
   z-index: 0;
 }
