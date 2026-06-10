@@ -1,0 +1,34 @@
+// ============================================
+// Policies Page — refund frame composition
+// ============================================
+
+.policies-page {
+  @include flex(column, center, center);
+  height: 100%;
+}
+
+// Frame is the layout anchor — it establishes natural dimensions.
+// The GIF is absolutely positioned behind the transparent frame center.
+.policies-page__frame-wrap {
+  position: relative;
+  width: 80%;
+  max-width: 300px;
+}
+
+.policies-page__frame {
+  display: block;
+  width: 100%;
+  height: auto;
+  position: relative;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.policies-page__gif {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}

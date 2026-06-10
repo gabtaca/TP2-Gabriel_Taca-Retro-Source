@@ -7,6 +7,7 @@ import ProductsPage from './pages/ProductsPage';
 import FAQPage from './pages/FAQPage';
 import ContactPage from './pages/ContactPage';
 import NotFoundPage from './pages/NotFoundPage';
+import PoliciesPage from './pages/PoliciesPage';
 import './styles/main.scss';
 
 function App() {
@@ -22,8 +23,8 @@ function App() {
               <Route path="/contact" element={<ContactPage />} />
               {/* Simple placeholder pages for footer links */}
               <Route path="/partners" element={<PlaceholderPage title="Our Partners" />} />
-              <Route path="/policies" element={<PlaceholderPage title="Policies" />} />
-              <Route path="/policies/*" element={<PlaceholderPage title="Policies" />} />
+              <Route path="/policies" element={<PoliciesPage />} />
+              <Route path="/policies/*" element={<PoliciesPage />} />
               <Route path="*" element={<NotFoundPage />} />
             </Routes>
           </PageLayout>
