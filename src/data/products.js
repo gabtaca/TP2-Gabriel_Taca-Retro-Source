@@ -126,8 +126,8 @@ export const PRODUCTS = [
     image: '/images/image_game-mAIgic.png',
     imageAlt: 'Mage-duel spell writing game — mAIgic: Words of Power',
     icon: '/images/image_game-mAIgic-list.png',
-    // TODO: replace with the real game file (public/downloads/...) or an external URL
-    download: '/downloads/mAIgic-words-of-power.zip',
+    // The mAgIc server checks the password and returns a short-lived signed link
+    download: 'https://magic.retro-source.net/download/token',
   },
 ];
 

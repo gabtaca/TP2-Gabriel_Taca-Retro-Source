@@ -1,8 +1,6 @@
 import { useCart } from '../context/CartContext';
 import { PRODUCTS, formatPrice } from '../data/products';
 
-const DOWNLOAD_PASSWORD = 'maigic';
-
 export default function CartAside() {
   const { cartItems, totalQuantity, isOpen, closeCart, removeFromCart, clearCart } =
     useCart();
@@ -20,21 +18,29 @@ export default function CartAside() {
     (item) => !PRODUCTS.find((p) => p.id === item.id)?.download,
   );
 
-  const handleDownload = () => {
+  const handleDownload = async () => {
     const input = window.prompt('Enter the password to download:');
     if (input === null) return;
-    if (input.trim().toLowerCase() !== DOWNLOAD_PASSWORD) {
-      window.alert('Wrong password.');
-      return;
+    const endpoint = downloadable[0].download;
+    try {
+      const res = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'content-type': 'application/json' },
+        body: JSON.stringify({ password: input.trim() }),
+      });
+      if (res.status === 403) {
+        window.alert('Wrong password.');
+        return;
+      }
+      if (!res.ok) {
+        window.alert('The download is not available right now. Try again later.');
+        return;
+      }
+      const { url } = await res.json();
+      window.location.assign(new URL(url, endpoint).href);
+    } catch {
+      window.alert('Could not reach the download server. Try again later.');
     }
-    downloadable.forEach((p) => {
-      const a = document.createElement('a');
-      a.href = p.download;
-      a.download = '';
-      a.target = '_blank';
-      a.rel = 'noopener';
-      a.click();
-    });
   };
 
   return (
