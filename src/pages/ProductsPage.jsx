@@ -287,7 +287,7 @@ export default function ProductsPage() {
                       <img className="product-list__icon" src={product.icon} alt="" aria-hidden="true" />
                     )}
                     <span className="product-list__name">{product.title}</span>
-                    <span className="product-list__price">{formatPrice(product.price)}</span>
+                    <span className="product-list__price">{product.priceLabel ?? formatPrice(product.price)}</span>
                   </div>
 
                   {descriptionOpenId === product.id && (
@@ -312,7 +312,7 @@ export default function ProductsPage() {
                 </div>
                 <div className="product-display__info">
                   <h2 className="product-display__title">{selectedProduct.title}</h2>
-                  <p className="product-display__price">{formatPrice(selectedProduct.price)}</p>
+                  <p className="product-display__price">{selectedProduct.priceLabel ?? formatPrice(selectedProduct.price)}</p>
                 </div>
               </div>
 

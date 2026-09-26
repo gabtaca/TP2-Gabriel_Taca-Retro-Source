@@ -1,5 +1,7 @@
 import { useCart } from '../context/CartContext';
-import { formatPrice } from '../data/products';
+import { PRODUCTS, formatPrice } from '../data/products';
+
+const DOWNLOAD_PASSWORD = 'maigic';
 
 export default function CartAside() {
   const { cartItems, totalQuantity, isOpen, closeCart, removeFromCart, clearCart } =
@@ -9,6 +11,31 @@ export default function CartAside() {
     (sum, item) => sum + item.price * item.quantity,
     0,
   );
+
+  // Look up the download from PRODUCTS so a changed URL isn't stale in localStorage
+  const downloadable = cartItems
+    .map((item) => PRODUCTS.find((p) => p.id === item.id))
+    .filter((p) => p?.download);
+  const hasPaidItems = cartItems.some(
+    (item) => !PRODUCTS.find((p) => p.id === item.id)?.download,
+  );
+
+  const handleDownload = () => {
+    const input = window.prompt('Enter the password to download:');
+    if (input === null) return;
+    if (input.trim().toLowerCase() !== DOWNLOAD_PASSWORD) {
+      window.alert('Wrong password.');
+      return;
+    }
+    downloadable.forEach((p) => {
+      const a = document.createElement('a');
+      a.href = p.download;
+      a.download = '';
+      a.target = '_blank';
+      a.rel = 'noopener';
+      a.click();
+    });
+  };
 
   return (
     <>
@@ -37,7 +64,7 @@ export default function CartAside() {
                 <div className="cart-line__info">
                   <span className="cart-line__title">{item.title}</span>
                   <span className="cart-line__price">
-                    {formatPrice(item.price * item.quantity)}
+                    {item.priceLabel ?? formatPrice(item.price * item.quantity)}
                   </span>
                   <span className="cart-line__qty">Qty: {item.quantity}</span>
                 </div>
@@ -59,9 +86,19 @@ export default function CartAside() {
               <span>Total ({totalQuantity} items)</span>
               <span>{formatPrice(total)}</span>
             </div>
-            <a href="/checkout" className="cart-aside__checkout">
-              Checkout
-            </a>
+            {downloadable.length > 0 && (
+              <button
+                className="cart-aside__checkout cart-aside__checkout--download"
+                onClick={handleDownload}
+              >
+                Download
+              </button>
+            )}
+            {hasPaidItems && (
+              <a href="/checkout" className="cart-aside__checkout">
+                Checkout
+              </a>
+            )}
             <button className="cart-aside__clear" onClick={clearCart}>
               Clear cart
             </button>

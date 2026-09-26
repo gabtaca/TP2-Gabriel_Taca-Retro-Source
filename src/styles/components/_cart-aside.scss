@@ -141,6 +141,13 @@
   &:hover {
     opacity: 0.85;
   }
+
+  &--download {
+    width: 100%;
+    border: none;
+    cursor: pointer;
+    font-size: inherit;
+  }
 }
 
 .cart-aside__clear {

@@ -8,6 +8,7 @@ export const COLLECTIONS = [
   'Stealth',
   'Social simulator',
   'Racing',
+  'Fantasy',
 ];
 
 export const TAGS = ['1-player', '1-4 Player', '1-2 Players'];
@@ -110,6 +111,23 @@ export const PRODUCTS = [
     image: '/images/image_game-spacebar.png',
     imageAlt: 'SPACE BAR — a story-driven cosmonaut game controlled entirely by the spacebar',
     icon: '/images/image_game-spacebar-list.png',
+  },
+  {
+    id: '10',
+    title: 'mAIgic: Words of Power',
+    handle: 'maigic-words-of-power',
+    price: 0,
+    priceLabel: 'PASSWORD',
+    currency: 'CAD',
+    description:
+      'mAIgic: Words of Power is a casual mage-duel game made for downtime during the workday. Players take turns writing creative spells to outsmart each other and let the AI judge who has the best spell! Take your time to craft the best spell possible with the mana you have left.',
+    tags: ['1-2 Players'],
+    collections: ['Fighting', 'Fantasy'],
+    image: '/images/image_game-mAIgic.png',
+    imageAlt: 'Mage-duel spell writing game — mAIgic: Words of Power',
+    icon: '/images/image_game-mAIgic-list.png',
+    // TODO: replace with the real game file (public/downloads/...) or an external URL
+    download: '/downloads/mAIgic-words-of-power.zip',
   },
 ];
 
